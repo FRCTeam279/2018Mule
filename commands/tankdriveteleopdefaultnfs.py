@@ -7,7 +7,7 @@ import oi
 import robotmap
 
 
-class DriveTeleopDefaultNFS(Command):
+class TankDriveTeleopDefaultNFS(Command):
     """
     This command uses a throttle and turning control scheme in the same manner as Need for Speed
     It's intended to make a robot that uses skid steering feel like a car
@@ -18,7 +18,7 @@ class DriveTeleopDefaultNFS(Command):
     """
 
     def __init__(self):
-        super().__init__('DriveTeleopDefaultNFS')
+        super().__init__('TankDriveTeleopDefaultNFS')
         self.requires(subsystems.driveline)
         self.setInterruptible(True)
         self.setRunWhenDisabled(False)

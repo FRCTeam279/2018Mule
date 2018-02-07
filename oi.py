@@ -2,6 +2,8 @@ import math
 from wpilib.joystick import Joystick
 from wpilib.buttons.joystickbutton import JoystickButton
 
+from commands.tankdrivetoencoderdistance import TankDriveToEncoderDistance
+
 
 class T16000M(Joystick):
 
@@ -18,6 +20,7 @@ class T16000M(Joystick):
 leftDriverStick = None
 rightDriverStick = None
 
+autoBtn = None
 
 class ConfigHolder:
     pass
@@ -38,12 +41,16 @@ def init():
 
     global leftDriverStick
     global rightDriverStick
+    #global autoBtn
 
     leftDriverStick = T16000M(0)
     rightDriverStick = T16000M(1)
 
     # trigger = JoystickButton(joystick, Joystick.ButtonType.kTrigger)
     # trigger.whenPressed(Crash())
+
+    # autoBtn = JoystickButton(leftDriverStick, 2)
+    # autoBtn.whenPressed(TankDriveToEncoderDistance(target=800, p=0.005, i=0.0, d=0.0, tolerance=100, minSpeed=0.0, maxSpeed=0.4))
 
 
 def filterInput(val, deadZone, filterFactor, scale):

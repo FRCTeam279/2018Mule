@@ -33,6 +33,10 @@ driveLine.rightEncBPort = 3
 driveLine.rightEncType = wpilib.Encoder.EncodingType.k4X
 driveLine.rightEncReverse = False
 
+
+
+
+
 """
 minTimeFullThrottleChange
 The minimum amount of time that the tank drive will allow the motors to switch from -1.0 to +1.0
@@ -53,8 +57,14 @@ driveLine.controlStyle = "nfs"
 # NFS Driving Config
 # ----------------------------------------------------------
 nfs = ConfigHolder()
-nfs.debugTurning = True
+nfs.debugTurning = False
 nfs.lowTurnScale = 0.3
 nfs.highTurnScale = 0.2
 nfs.slowDriveSpeedFactor = 0.7
 
+
+# ----------------------------------------------------------
+# Sensors Config
+# ----------------------------------------------------------
+sensors = ConfigHolder()
+sensors.hasAHRS = True

@@ -4,7 +4,7 @@ from wpilib.command import Command
 import subsystems
 import oi
 
-class DriveTeleopDefaultSkid(Command):
+class TankDriveTeleopDefaultSkid(Command):
     '''
     This command will read the joystick's y axis and use that value to control
     the speed of the SingleMotor subsystem.
@@ -12,7 +12,7 @@ class DriveTeleopDefaultSkid(Command):
 
 
     def __init__(self):
-        super().__init__('DriveTeleopDefaultSkid')
+        super().__init__('TankDriveTeleopDefaultSkid')
         self.requires(subsystems.driveline)
         self.setInterruptible(True)
         self.setRunWhenDisabled(False)

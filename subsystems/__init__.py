@@ -10,7 +10,7 @@ from .tankdrive import TankDrive
 driveline = None
 
 def init():
-    print('Subsystems init called')
+    print('Subsystems: init called')
     '''
     Creates all subsystems. You must run this before any commands are
     instantiated. Do not run it more than once.
@@ -22,6 +22,6 @@ def init():
     called more than once in that case.
     '''
     if driveline is not None and not RobotBase.isSimulation():
-        raise RuntimeError('Subsystems have already been initialized')
+        raise RuntimeError('Subsystems have already been initialized!')
 
     driveline = TankDrive()
