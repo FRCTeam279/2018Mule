@@ -32,8 +32,7 @@ class TankDriveToEncoderDistance(Command):
         self.logCounter = 0
 
     def initialize(self):
-        print("CMD TankDriveToEncoderDistance initialize called")
-
+        #print("CMD TankDriveToEncoderDistance initialize called")
         if self.useSmartDashboardValues:
             self.target = SmartDashboard.getNumber("DriveEnc Target", 0.0)
 
@@ -67,8 +66,7 @@ class TankDriveToEncoderDistance(Command):
         #    print("CMD TankDriveToEncoderDistance isFinished: target={}, encoder={}, tolerance={},
         #       result={}".format(self.target, count, self.tolerance, res))
         if res:
-            # if subsystems.driveline.pidController.onTarget():
-            print("CMD TankDriveToEncoderDistance isFinished is True")
+            # print("CMD TankDriveToEncoderDistance isFinished is True")
             return True
         return False
 

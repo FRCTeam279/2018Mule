@@ -2,7 +2,9 @@ import math
 from wpilib.joystick import Joystick
 from wpilib.buttons.joystickbutton import JoystickButton
 
+from commands.resetyawangle import ResetYawAngle
 from commands.tankdrivetoencoderdistance import TankDriveToEncoderDistance
+from commands.turntoheading import TurnToHeading
 
 
 class T16000M(Joystick):
@@ -21,6 +23,9 @@ leftDriverStick = None
 rightDriverStick = None
 
 autoBtn = None
+autoTurnBtn = None
+
+resetYawBtn = None
 
 class ConfigHolder:
     pass
@@ -41,17 +46,23 @@ def init():
 
     global leftDriverStick
     global rightDriverStick
+    global resetYawBtn
     #global autoBtn
+    global autoTurnBtn
 
     leftDriverStick = T16000M(0)
     rightDriverStick = T16000M(1)
 
+    resetYawBtn = JoystickButton(rightDriverStick, 2)
+    resetYawBtn.whenPressed(ResetYawAngle())
     # trigger = JoystickButton(joystick, Joystick.ButtonType.kTrigger)
     # trigger.whenPressed(Crash())
 
-    # autoBtn = JoystickButton(leftDriverStick, 2)
-    # autoBtn.whenPressed(TankDriveToEncoderDistance(target=800, p=0.005, i=0.0, d=0.0, tolerance=100, minSpeed=0.0, maxSpeed=0.4))
+    autoBtn = JoystickButton(leftDriverStick, 2)
+    autoBtn.whenPressed(TankDriveToEncoderDistance(target=800, p=0.005, i=0.0, d=0.0, tolerance=100, minSpeed=0.0, maxSpeed=0.4))
 
+    autoTurnBtn = JoystickButton(leftDriverStick, 3)
+    autoTurnBtn.whenPressed(TurnToHeading(target=90, p=0.0035, i=0.0000, d=0.0000, minSpeed=0.15, tolerance=3, numSamples=10, steadyRate=0.5, scaleSpeed=1.0))
 
 def filterInput(val, deadZone, filterFactor, scale):
     """

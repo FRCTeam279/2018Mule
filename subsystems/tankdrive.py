@@ -35,6 +35,35 @@ class TankPID(PIDSource, PIDOutput):
             subsystems.driveline.driveRaw(output, output)
 
 
+class TankPIDTurn(PIDSource, PIDOutput):
+
+    def __init__(self, minSpeed, scaleSpeed):
+        self.scaleSpeed = scaleSpeed
+        self.minSpeed = minSpeed
+
+    def getPIDSourceType(self):
+        return wpilib.pidcontroller.PIDController.PIDSourceType.kDisplacement
+
+    def setPIDSourceType(self, pidSource):
+        pass
+
+    def pidGet(self):
+        return robotmap.sensors.ahrs.getYaw()
+
+    def pidWrite(self, output):
+        raw = math.fabs(output)
+        raw *= self.scaleSpeed
+        if raw < self.minSpeed:
+            raw = self.minSpeed
+
+        if output > 0.0:
+            subsystems.driveline.driveRaw(raw, -raw)
+        else:
+            subsystems.driveline.driveRaw(-raw, raw)
+
+
+
+
 class TankDrive(Subsystem):
 
     def __init__(self):
@@ -107,6 +136,9 @@ class TankDrive(Subsystem):
         # PID Setup
         self.tankPID = TankPID()
         self.pidController = PIDController(0.0, 0.0, 0.0, self.tankPID, self.tankPID)
+
+        self.turnPID = TankPIDTurn(0.0, 0.5)
+        self.pidTurnController = PIDController(0.0, 0.0, 0.0, self.turnPID, self.turnPID)
 
         SmartDashboard.putNumber("DriveEnc Target", 0.0)
         SmartDashboard.putNumber("DriveEnc P", 0.005)
