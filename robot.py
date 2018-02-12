@@ -15,6 +15,8 @@ from commands.tankdrivetoencoderdistance import TankDriveToEncoderDistance
 
 
 class MyRobot(CommandBasedRobot):
+    # for parent code see:
+    # https://github.com/robotpy/robotpy-wpilib-utilities/blob/master/commandbased/commandbasedrobot.py
 
     def robotInit(self):
         print('2018Mule - robotInit called')
@@ -36,6 +38,23 @@ class MyRobot(CommandBasedRobot):
         # setup buttons for testing
         #SmartDashboard.putData("Test DriveToEncoderDistance", TankDriveToEncoderDistance(
         #    useDashboardValues=True))
+
+
+    def autonomousPeriodic(self):
+        # game data with be three character string made up of L and R for each position from
+        # your alliance's perspective
+        gameData = DriverStation.getInstance().getGameSpecificMessage()
+
+        if len(gameData) > 0:
+            nearSwitchSide = gameData[0]
+            scaleSide = gameData[1]
+            farSwitchSide = gameData[2]
+
+        else:
+            print("Auto Periodic: Error - gameData was zero length!")
+
+        Scheduler.getInstance().run()
+
 
     def teleopPeriodic(self):
         Scheduler.getInstance().run()

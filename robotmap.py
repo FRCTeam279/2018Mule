@@ -68,3 +68,6 @@ nfs.slowDriveSpeedFactor = 0.7
 # ----------------------------------------------------------
 sensors = ConfigHolder()
 sensors.hasAHRS = True
+
+
+print("RobotMap module completed load")

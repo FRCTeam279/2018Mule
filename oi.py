@@ -12,11 +12,17 @@ class T16000M(Joystick):
     def __init__(self, port):
         super().__init__(port)
         self.port = port
-        self.setAxisChannel(Joystick.AxisType.kX, 0)
-        self.setAxisChannel(Joystick.AxisType.kY, 1)
-        self.setAxisChannel(Joystick.AxisType.kZ, 2)
-        self.setAxisChannel(Joystick.AxisType.kThrottle, 3)
-        self.setAxisChannel(Joystick.AxisType.kTwist, 2)
+        # self.setAxisChannel(Joystick.AxisType.kX, 0)
+        # self.setAxisChannel(Joystick.AxisType.kY, 1)
+        # self.setAxisChannel(Joystick.AxisType.kZ, 2)
+        # self.setAxisChannel(Joystick.AxisType.kThrottle, 3)
+        # self.setAxisChannel(Joystick.AxisType.kTwist, 2)
+
+        self.setXChannel(0)
+        self.setYChannel(1)
+        self.setZChannel(2)
+        self.setThrottleChannel(3)
+        self.setTwistChannel(2)
 
 
 leftDriverStick = None
@@ -35,7 +41,7 @@ config.leftDriverStickNullZone = 0.05
 config.rightDriverStickNullZone = 0.05
 
 # button indexes
-config.btnResetYawAngleIndex = 7
+config.btnResetYawAngleIndex = 2
 
 
 def init():
@@ -55,14 +61,13 @@ def init():
 
     resetYawBtn = JoystickButton(rightDriverStick, 2)
     resetYawBtn.whenPressed(ResetYawAngle())
-    # trigger = JoystickButton(joystick, Joystick.ButtonType.kTrigger)
-    # trigger.whenPressed(Crash())
 
-    autoBtn = JoystickButton(leftDriverStick, 2)
-    autoBtn.whenPressed(TankDriveToEncoderDistance(target=800, p=0.005, i=0.0, d=0.0, tolerance=100, minSpeed=0.0, maxSpeed=0.4))
+    #autoBtn = JoystickButton(leftDriverStick, 2)
+    #autoBtn.whenPressed(TankDriveToEncoderDistance(target=800, p=0.005, i=0.0, d=0.0, tolerance=100, minSpeed=0.0, maxSpeed=0.4))
 
-    autoTurnBtn = JoystickButton(leftDriverStick, 3)
-    autoTurnBtn.whenPressed(TurnToHeading(target=90, p=0.0035, i=0.0000, d=0.0000, minSpeed=0.15, tolerance=3, numSamples=10, steadyRate=0.5, scaleSpeed=1.0))
+    #autoTurnBtn = JoystickButton(leftDriverStick, 3)
+    #autoTurnBtn.whenPressed(TurnToHeading(target=90, p=0.0035, i=0.0000, d=0.0000, minSpeed=0.15, tolerance=3, numSamples=10, steadyRate=0.5, scaleSpeed=1.0))
+
 
 def filterInput(val, deadZone, filterFactor, scale):
     """
