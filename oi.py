@@ -2,6 +2,7 @@ import math
 from wpilib.joystick import Joystick
 from wpilib.buttons.joystickbutton import JoystickButton
 
+from commands.autodriveforwardtoscale import AutoDriveForwardToScale
 from commands.resetyawangle import ResetYawAngle
 from commands.tankdrivetoencoderdistance import TankDriveToEncoderDistance
 from commands.turntoheading import TurnToHeading
@@ -53,7 +54,7 @@ def init():
     global leftDriverStick
     global rightDriverStick
     global resetYawBtn
-    #global autoBtn
+    global autoBtn
     global autoTurnBtn
 
     leftDriverStick = T16000M(0)
@@ -62,8 +63,8 @@ def init():
     resetYawBtn = JoystickButton(rightDriverStick, 2)
     resetYawBtn.whenPressed(ResetYawAngle())
 
-    #autoBtn = JoystickButton(leftDriverStick, 2)
-    #autoBtn.whenPressed(TankDriveToEncoderDistance(target=800, p=0.005, i=0.0, d=0.0, tolerance=100, minSpeed=0.0, maxSpeed=0.4))
+    autoBtn = JoystickButton(leftDriverStick, 2)
+    autoBtn.whenPressed(AutoDriveForwardToScale())
 
     #autoTurnBtn = JoystickButton(leftDriverStick, 3)
     #autoTurnBtn.whenPressed(TurnToHeading(target=90, p=0.0035, i=0.0000, d=0.0000, minSpeed=0.15, tolerance=3, numSamples=10, steadyRate=0.5, scaleSpeed=1.0))

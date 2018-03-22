@@ -21,6 +21,7 @@ driveLine.speedControllerType = "TALON"
 driveLine.driveWheelRadiusInches = 3.1875
 driveLine.driveWheelEncTicks = 360
 driveLine.inchesPerTick = 2 * math.pi * driveLine.driveWheelRadiusInches / driveLine.driveWheelEncTicks
+driveLine.ticksPerInch = 10
 
 driveLine.leftEncAPort = 0
 driveLine.leftEncBPort = 1

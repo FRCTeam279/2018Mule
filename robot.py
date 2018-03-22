@@ -11,7 +11,11 @@ import robotmap
 import subsystems
 import oi
 
-from commands.tankdrivetoencoderdistance import TankDriveToEncoderDistance
+
+from fakeautomanager import FakeAutoManager
+
+
+autoManager = None
 
 
 class MyRobot(CommandBasedRobot):
@@ -33,33 +37,35 @@ class MyRobot(CommandBasedRobot):
         subsystems.init()
         oi.init()
 
-        #SmartDashboard.putData("TankDrive", subsystems.driveline)
+        global autoManager
+        autoManager = FakeAutoManager()
+        autoManager.initialize()
 
-        # setup buttons for testing
-        #SmartDashboard.putData("Test DriveToEncoderDistance", TankDriveToEncoderDistance(
-        #    useDashboardValues=True))
-
+    def autonomousInit(self):
+        super().autonomousInit()
+        autoManager.gameData = None
 
     def autonomousPeriodic(self):
-        # game data with be three character string made up of L and R for each position from
-        # your alliance's perspective
-        gameData = DriverStation.getInstance().getGameSpecificMessage()
+        global autoManager
+        try:
+            if not autoManager.gameData:
+                autoManager.gameData = str(DriverStation.getInstance().getGameSpecificMessage())
+                print("Auto Periodic: Game Data = {}".format(str(autoManager.gameData)))
 
-        if len(gameData) > 0:
-            nearSwitchSide = gameData[0]
-            scaleSide = gameData[1]
-            farSwitchSide = gameData[2]
-
-        else:
-            print("Auto Periodic: Error - gameData was zero length!")
-
-        Scheduler.getInstance().run()
-
+                if len(str(autoManager.gameData)) > 0:
+                    gameDataNearSwitchSide = autoManager.gameData[0]
+                    gameDataScaleSide = autoManager.gameData[1]
+                    autoCommandToRun = autoManager.getAction(gameDataNearSwitchSide, gameDataScaleSide)
+                    autoCommandToRun.start()
+                    print("Auto Periodic: Started command received from AutoManager")
+                else:
+                    print("Auto Periodic: Error - gameData was zero length!")
+        except Exception as e:
+            print('autonomousPeriodic: Error! Exception caught running autoManager: {}'.format(e))
+        super().autonomousPeriodic()
 
     def teleopPeriodic(self):
         Scheduler.getInstance().run()
-        SmartDashboard.putNumber("DL Enc Left", subsystems.driveline.leftEncoder.get())
-        SmartDashboard.putNumber("DL Enc Right", subsystems.driveline.rightEncoder.get())
 
     def testPeriodic(self):
         wpilib.LiveWindow.run()
