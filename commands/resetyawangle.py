@@ -1,6 +1,7 @@
 from wpilib import DriverStation
 from wpilib.command import Command
-from robotpy_ext.common_drivers import navx
+#from robotpy_ext.common_drivers import navx
+import navx
 
 import robotmap
 

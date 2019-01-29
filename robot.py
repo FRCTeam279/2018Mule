@@ -3,7 +3,8 @@ from commandbased import CommandBasedRobot
 from wpilib.command import Scheduler
 from wpilib import SmartDashboard
 from wpilib.driverstation import DriverStation
-from robotpy_ext.common_drivers import navx
+#from robotpy_ext.common_drivers import navx
+import navx
 
 
 # import items in the order they should be initialized to avoid any suprises
